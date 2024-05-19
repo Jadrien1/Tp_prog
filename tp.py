@@ -1,7 +1,7 @@
 '''
 @auteur(e)s     Bradley Colas et Jean Luc Adrien
 @matricules     e2353376 et e2368878
-@date           18-05-2024
+@date           19-05-2024
 '''
 
 class DonneesGeo:
@@ -101,3 +101,45 @@ def trouverDistanceMin(nomFichier):
 
     distance_min = liste_calcul_distance[0] # On prend prend le premier calcul qui est la distance minimal dans la liste et on l'affiche
     print(f"Distance minimale en km entre 2 villes : Ville 1 : {distance_min[0]} {distance_min[1]} {distance_min[2]} {distance_min[3]} et Ville 2 : {distance_min[4]} {distance_min[5]} {distance_min[6]} {distance_min[7]} Distance en kilomètres : {distance_min[8]}")
+
+
+
+def menu():
+
+    choix_1_valide = "" #Variable pour savoir si l'utilisateur a fait le choix 1
+    choix_2_valide = "" #Variable pour savoir si l'utilisateur a fait le choix 2
+
+    while True: #Boucle pour afficher le menu en continu apres chaque choix saut q (quitter)
+        print("Menu")
+        print("1- Creation et affichage du fichier CSV\n2- Sauvegarde en JSON\n3- Affichage distance minimale et sauvegarde des calculs (distances.csv)\nq- pour quitter")
+
+        choix = input("Choisissez une option : ")
+
+        if choix == '1': # Creation et affichage du fichier
+            Liste_Objet_DonneesGeo = lireDonneesCsv("Ville.csv")
+            choix_1_valide = "OK" #Choix 1 valide, variable affecter
+
+        elif choix == '2': # Sauvegarde en JSON
+            if choix_1_valide == "OK":
+                ecrireDonneesJson("Ville.json", Liste_Objet_DonneesGeo)
+                print("Données sauvegardées dans le fichier Ville.json.")
+                choix_2_valide = "OK" #Choix 2 valide, variable affecter
+            else:
+                print("Erreur, Exécuter d'abord l'option 1.")
+
+        elif choix == '3': # Affichage distance minimale et sauvegarde des calculs (distances.csv)
+            if choix_2_valide == "OK":
+                trouverDistanceMin("Ville.json")
+                print("Calculs de distance sauvegardés dans le fichier distances.csv.")
+            else:
+                print("Erreur : Veuillez d'abord exécuter l'option 2 pour sauvegarder les données au format JSON.")
+
+        elif choix == 'q':
+            print("Sortie du programme.")
+            break
+
+        else:
+            print("Choix non valide : ")
+
+
+menu()
